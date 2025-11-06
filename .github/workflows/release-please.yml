@@ -10,7 +10,6 @@ jobs:
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
           release-type: node
       # The logic below handles the npm publication:
       - uses: actions/checkout@v4
@@ -27,4 +26,5 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
