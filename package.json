@@ -1,6 +1,6 @@
 {
 	"name": "@master-key-g/gulp-shell",
-	"version": "0.0.0-development",
+	"version": "1.0.0",
 	"description": "A handy command line interface for gulp",
 	"keywords": [
 		"gulpplugin",
@@ -29,7 +29,7 @@
 		"lib/index.d.ts.map",
 		"lib/index.js",
 		"lib/index.js.map",
-        "README.md"
+		"README.md"
 	],
 	"publishConfig": {
 		"access": "public",
