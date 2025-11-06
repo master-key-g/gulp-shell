@@ -31,4 +31,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
         if: ${{ steps.release.outputs.release_created }}
