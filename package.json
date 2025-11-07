@@ -61,8 +61,6 @@
 		"decode-uri-component": "^0.4.1",
 		"expand-template": "^2.0.3",
 		"fancy-log": "^2.0.0",
-		"hosted-git-info": "^9.0.2",
-		"ini": "^6.0.0",
 		"json5": "2.2.3",
 		"path-parse": "1.0.7",
 		"plugin-error": "^2.0.1",
