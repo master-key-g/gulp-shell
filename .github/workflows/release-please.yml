@@ -34,7 +34,7 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - run: npm publish
         env:
-          token: ${{ secrets.MY_RELEASE_PLEASE_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
         if: ${{ steps.release.outputs.release_created }}
