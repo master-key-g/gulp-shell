@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/master-key-g/gulp-shell/compare/v1.8.0...v1.9.0) (2025-11-07)
+
+
+### Features
+
+* Update package.json ([f0b3d9a](https://github.com/master-key-g/gulp-shell/commit/f0b3d9ad32a4eaf65a8cdad58a302d361129f567))
+
 ## [1.8.0](https://github.com/master-key-g/gulp-shell/compare/v1.7.0...v1.8.0) (2025-11-07)
 
 
