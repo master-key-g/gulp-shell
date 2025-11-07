@@ -1,5 +1,5 @@
 {
-	"name": "@hmkay/gulp-shell",
+	"name": "@master-key-g/gulp-shell",
 	"version": "1.10.0",
 	"description": "A handy command line interface for gulp",
 	"keywords": [
@@ -51,7 +51,7 @@
 		"coverage": "nyc npm run test",
 		"coveralls": "gulp coveralls",
 		"prepare": "npm run build",
-		"prepublishOnly": "npm test"
+		"prepublishOnly": "npm run prepare"
 	},
 	"dependencies": {
 		"acorn": "^8.15.0",
