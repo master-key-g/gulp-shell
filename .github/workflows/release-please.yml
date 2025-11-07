@@ -29,7 +29,10 @@ jobs:
           node-version: ${{ matrix.node }}
           registry-url: 'https://npm.pkg.github.com'
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm ci
+      - run: npm login
+        env:
+          password: ${{secrets.TEST}}
+          Username: ${{secrets.NAME}}
         if: ${{ steps.release.outputs.release_created }}
       - run: npm publish #Publish a package
         env:
