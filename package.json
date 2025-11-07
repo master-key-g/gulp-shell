@@ -8,13 +8,13 @@
 		"shell",
 		"command"
 	],
-	"homepage": "https://github.com/master861/Gulp-Shell2",
+	"homepage": "https://github.com/master-key-g/gulp-shell",
 	"bugs": {
-		"url": "https://github.com/master861/Gulp-Shell2/issues"
+		"url": "https://github.com/master-key-g/gulp-shell/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/master861/Gulp-Shell2.git"
+		"url": "git+https://github.com/master-key-g/gulp-shell.git"
 	},
 	"license": "MIT",
 	"author": "master861",
