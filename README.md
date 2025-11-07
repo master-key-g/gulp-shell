@@ -2,9 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/master-key-g/gulp-shell/badge.svg?branch=main)](https://coveralls.io/github/master-key-g/gulp-shell?branch=main)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=plastic)](https://github.com/prettier/prettier)
-![Libraries.io dependency status for latest release](https://img.shields.io/librariesio/release/npm/%40hmkay%2Fgulp-shell?style=plastic)
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/master-key-g/gulp-shell?style=plastic)
-![Libraries.io SourceRank, scoped npm package](https://img.shields.io/librariesio/sourcerank/npm/%40hmkay/gulp-shell?style=plastic)
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmaster-key-g%2Fgulp-shell%2Frefs%2Fheads%2Fmain%2Fpackage.json&query=%24.name&style=plastic)
 ![GitHub Tag](https://img.shields.io/github/v/tag/master-key-g/gulp-shell?style=plastic)
 
