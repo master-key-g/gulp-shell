@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/master-key-g/gulp-shell/compare/v1.7.0...v1.8.0) (2025-11-07)
+
+
+### Features
+
+* Update release-please.yml ([3d187e8](https://github.com/master-key-g/gulp-shell/commit/3d187e87db88573e096b211e4b6e049219701813))
+
 ## [1.7.0](https://github.com/master-key-g/gulp-shell/compare/v1.6.0...v1.7.0) (2025-11-07)
 
 
