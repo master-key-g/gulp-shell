@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/master-key-g/gulp-shell/compare/v1.4.0...v1.5.0) (2025-11-07)
+
+
+### Features
+
+* Update release-please new token ([3eeaaa6](https://github.com/master-key-g/gulp-shell/commit/3eeaaa6bb2a7bea50620ca5d6f5a7c91b406aa7e))
+
 ## [1.4.0](https://github.com/master-key-g/gulp-shell/compare/v1.3.0...v1.4.0) (2025-11-07)
 
 
