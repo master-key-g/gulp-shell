@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/master-key-g/gulp-shell/compare/v1.3.0...v1.4.0) (2025-11-07)
+
+
+### Features
+
+* Removed old packages and generatet are new lock file ([248b1a4](https://github.com/master-key-g/gulp-shell/commit/248b1a4dd8c978c6b35ba2b3f57795a9b1226871))
+
 ## [1.3.0](https://github.com/master-key-g/gulp-shell/compare/v1.2.0...v1.3.0) (2025-11-07)
 
 
