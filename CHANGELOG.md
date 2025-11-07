@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/master-key-g/gulp-shell/compare/v1.9.0...v1.10.0) (2025-11-07)
+
+
+### Features
+
+* for releases Create .npmrc ([8e340cc](https://github.com/master-key-g/gulp-shell/commit/8e340ccd926946bc02e029e2dce75a2297fd5ee6))
+
 ## [1.9.0](https://github.com/master-key-g/gulp-shell/compare/v1.8.0...v1.9.0) (2025-11-07)
 
 
