@@ -1,5 +1,5 @@
 {
-	"name": "@master-key-g/gulp-shell",
+	"name": "@hmkay/gulp-shell",
 	"version": "1.8.0",
 	"description": "A handy command line interface for gulp",
 	"keywords": [
@@ -45,7 +45,7 @@
 	},
 	"scripts": {
 		"build": "gulp build",
-		"test": "tsc && nyc --reporter=html --reporter=text-summary --reporter=lcov mocha --require mocha-suppress-logs",
+		"test": "nyc --reporter=html --reporter=text-summary --reporter=lcov mocha --require mocha-suppress-logs",
 		"lint": "eslint --fix .",
 		"watch": "gulp watch",
 		"coverage": "nyc npm run test",
