@@ -47,7 +47,7 @@ jobs:
       - name: Publish package to GitHub
         uses: JS-DevTools/npm-publish@v4
         with:
-          password: ${{secrets.test}}
+          token: ${{secrets.test}}
           Username: ${{secrets.name}}
           registry: 'https://npm.pkg.github.com'
 
