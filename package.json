@@ -1,6 +1,6 @@
 {
 	"name": "@master-key-g/gulp-shell",
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"description": "A handy command line interface for gulp",
 	"keywords": [
 		"gulpplugin",
