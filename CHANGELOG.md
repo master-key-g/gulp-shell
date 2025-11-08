@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/master-key-g/gulp-shell/compare/v1.10.0...v1.11.0) (2025-11-08)
+
+
+### Features
+
+* droped note 10 support ([5d4062c](https://github.com/master-key-g/gulp-shell/commit/5d4062c0d23befdc804bec665b05a9f0b8f0baed))
+
 ## [1.10.0](https://github.com/master-key-g/gulp-shell/compare/v1.9.0...v1.10.0) (2025-11-07)
 
 
