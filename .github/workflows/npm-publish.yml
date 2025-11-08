@@ -49,7 +49,7 @@ jobs:
         with:
           token: ${{secrets.test}}
           Username: ${{secrets.name}}
-          registry: 'https://npm.pkg.github.com'
+          
 
       - if: ${{ steps.publish.outputs.type }}
         run: |
