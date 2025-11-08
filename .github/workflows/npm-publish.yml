@@ -33,7 +33,7 @@ jobs:
         run: npm run build
 
       - name: Publish package to npm
-        run: npm login Username=${{secrets.name}} Password=${{ secrets.NPM_TOKEN_NEW }} registry='http://registry.npmjs.org/'
+        run: npm login Username=${{secrets.name}} Password=${{ secrets.TEST_GITHUB }} registry='http://registry.npmjs.org/'
        
            
            
