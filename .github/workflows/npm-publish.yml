@@ -47,7 +47,8 @@ jobs:
         id: publishgithub
         uses: JS-DevTools/npm-publish@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{secrets.test}}
+          Username: ${{secrets.name}}
           registry: 'https://npm.pkg.github.com'
 
       - if: ${{ steps.publish.outputs.type }}
