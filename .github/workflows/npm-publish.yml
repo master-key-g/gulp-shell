@@ -33,10 +33,10 @@ jobs:
         run: npm run build
 
       - name: Publish package to npm
-        uses: JS-DevTools/npm-publish@v4
-        with:
-           token: ${{ secrets.NPM_TOKEN_NEW }}
-           registry: 'http://registry.npmjs.org/'
+        run: npm login Username=${{secrets.name}} Password=${{ secrets.NPM_TOKEN_NEW }} registry='http://registry.npmjs.org/'
+       
+           
+           
 
       - name: Update scope name in package json file for GitHub
         uses: restackio/update-json-values-action@v1.0.0
