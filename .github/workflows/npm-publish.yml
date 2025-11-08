@@ -1,34 +1,58 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
-
-permissions:
-  contents: read
+name: 'Build and publish npm package'
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  build_publish:
+    name: Build and publish npm package
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-      - run: npm set //registry.npmjs.org/:_authToken ${{secrets.HOPE}}
-      - run: npm publish
+          node-version: 20.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run coverage
+
+      - name: Build package
+        run: npm run build
+
+      - name: Publish package to npm
+        id: publish
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN_NEW }}
+
+      - name: Update scope name in package json file for GitHub
+        uses: restackio/update-json-values-action@v1.0.0
+        with:
+          file: package.json
+          values: '{"@master-key-g/gulp-shell": "@master-key-g/gulp-shell"}'
+
+      - name: Publish package to GitHub
+        id: publishgithub
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: 'https://npm.pkg.github.com'
+
+      - if: ${{ steps.publish.outputs.type }}
+        run: |
+          echo "Version changed!"
