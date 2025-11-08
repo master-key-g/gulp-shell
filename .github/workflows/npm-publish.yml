@@ -36,7 +36,7 @@ jobs:
         id: publish
         uses: JS-DevTools/npm-publish@v2
         with:
-          token: ${{ secrets.NPM_TOKEN_NEW }}
+           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_NEW }}
 
       - name: Update scope name in package json file for GitHub
         uses: restackio/update-json-values-action@v1.0.0
