@@ -33,7 +33,6 @@ jobs:
         run: npm run build
 
       - name: Publish package to npm
-        id: publish
         uses: JS-DevTools/npm-publish@v4
         with:
            token: ${{ secrets.NPM_TOKEN_NEW }}
@@ -45,8 +44,7 @@ jobs:
           values: '{"@master-key-g/gulp-shell": "@master-key-g/gulp-shell"}'
 
       - name: Publish package to GitHub
-        id: publishgithub
-        uses: JS-DevTools/npm-publish@v2
+        uses: JS-DevTools/npm-publish@v4
         with:
           password: ${{secrets.test}}
           Username: ${{secrets.name}}
