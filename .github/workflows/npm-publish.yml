@@ -32,25 +32,11 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Publish package to npm
-        run: npm login Username=${{secrets.name}} Password=${{ secrets.TEST_GITHUB }} registry='http://registry.npmjs.org/'
-       
-           
-           
-
-      - name: Update scope name in package json file for GitHub
-        uses: restackio/update-json-values-action@v1.0.0
-        with:
-          file: package.json
-          values: '{"@master-key-g/gulp-shell": "@master-key-g/gulp-shell"}'
-
-      - name: Publish package to GitHub
-        uses: JS-DevTools/npm-publish@v4
-        with:
-          token: ${{secrets.test}}
-          Username: ${{secrets.name}}
-          
-
-      - if: ${{ steps.publish.outputs.type }}
-        run: |
-          echo "Version changed!"
+      - name: Set package registry
+        run: npm config set registry https://npm.pkg.github.com
+      - name: GitHub package registry authentication
+        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GPR_TOKEN }}
+      - name: Npm registry authentication
+        run: npm set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN_NEW}}
+      - name: Publish the package to Github and Npm package registries
+        run: npm publish
