@@ -1,5 +1,6 @@
 name: 'Build and publish npm package'
-
+permissions:
+  contents: read
 on:
   push:
     branches:
