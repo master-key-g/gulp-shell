@@ -39,6 +39,6 @@ jobs:
       - name: Set package registry Npm
         run: npm config set @master-key-g:registry https://registry.npmjs.org/
       - name: Npm registry authentication
-        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.TEST_GITHUB}}
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN_NEW}}
       - name: Publish the package to Github and Npm package registries
         run: npm publish
