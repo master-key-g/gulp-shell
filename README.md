@@ -1,6 +1,6 @@
 # gulp-shell
 
-[![Coverage Status](https://coveralls.io/repos/github/master-key-g/gulp-shell/badge.svg?branch=main)](https://coveralls.io/github/master-key-g/gulp-shell?branch=main)
+![Coveralls](https://img.shields.io/coverallsCoverage/github/master-key-g/gulp-shell?branch=main&style=plastic&logo=coveralls&color=%233F5767)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=plastic)](https://github.com/prettier/prettier)
 ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/master-key-g/gulp-shell?style=plastic)
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fmaster-key-g%2Fgulp-shell%2Frefs%2Fheads%2Fmain%2Fpackage.json&query=%24.name&style=plastic)
