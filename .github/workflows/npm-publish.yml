@@ -1,6 +1,7 @@
 name: 'Build and publish npm package'
 permissions:
   contents: read
+  packages: write # allow GITHUB_TOKEN to publish packages
 on:
   push:
     branches:
