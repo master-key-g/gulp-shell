@@ -1,3 +1,4 @@
+/* eslint-disable @stylistic/arrow-parens */
 import { expect as _expect } from '@hapi/code'
 import { describe, it } from 'mocha'
 import { join } from 'path'
@@ -6,191 +7,335 @@ import Vinyl from 'vinyl'
 import shell from './index'
 
 const expectToFlow = (
-	stream: NodeJS.ReadWriteStream,
-	done: (error?: unknown) => void
+  stream: NodeJS.ReadWriteStream,
+  done: (error?: unknown) => void,
 ): void => {
-	stream.on('error', done).on('data', () => {
-		done()
-	})
+  stream.on(
+    'error',
+    done,
+  ).on(
+    'data',
+    () => {
+      done()
+    },
+  )
 }
 
-describe('gulp-shell(commands, options)', () => {
-	const fakeFile = new Vinyl({
-		cwd: __dirname,
-		base: __dirname,
-		path: join(__dirname, 'test-file')
-	})
+describe(
+  'gulp-shell(commands, options)',
+  () => {
+    const fakeFile = new Vinyl({
+      cwd: __dirname,
+      base: __dirname,
+      path: join(
+        __dirname,
+        'test-file',
+      ),
+    })
 
-	it('throws when `commands` is missing', () => {
-		_expect(shell).to.throw('Missing commands')
-	})
+    it(
+      'throws when `commands` is missing',
+      () => {
+        _expect(shell).to.throw('Missing commands')
+      },
+    )
 
-	it('works when `commands` is a string', () => {
-		_expect(shell.bind(null, 'true')).not.to.throw()
-	})
+    it(
+      'works when `commands` is a string',
+      () => {
+        _expect(shell.bind(
+          null,
+          'true',
+        )).not.to.throw()
+      },
+    )
 
-	it('passes file through', done =>
-		new Promise<void>(resolve => {
-			const stream = shell('true')
+    it(
+      'passes file through',
+      done => new Promise<void>(resolve => {
+        const stream = shell('true')
 
-			stream.on('data', file => {
-				_expect(file).to.equal(fakeFile)
-				resolve()
+        stream.on(
+          'data',
+          file => {
+            _expect(file).to.equal(fakeFile)
+            resolve()
+          },
+        )
+        done()
+        stream.write(fakeFile)
+      }),
+    )
 
-			})
-			done()
-			stream.write(fakeFile)
-		}))
+    it(
+      'executes command after interpolation',
+      () => new Promise(resolve => {
+        const stream = shell([`test <%= file.path %> = ${fakeFile.path}`])
 
-	it('executes command after interpolation', () =>
-		new Promise(resolve => {
-			const stream = shell([`test <%= file.path %> = ${fakeFile.path}`])
+        expectToFlow(
+          stream,
+          resolve,
+        )
 
-			expectToFlow(stream, resolve)
+        stream.write(fakeFile)
+      }),
+    )
 
-			stream.write(fakeFile)
-		}))
+    it(
+      'prepends `./node_modules/.bin` to `PATH`',
+      () => new Promise(resolve => {
+        const stream = shell(
+          [
+            `echo $PATH | grep -q "${join(
+              process.cwd(),
+              './node_modules/.bin',
+            )}"`,
+          ],
+          { shell: 'bash' },
+        )
 
+        expectToFlow(
+          stream,
+          resolve,
+        )
 
-	it('prepends `./node_modules/.bin` to `PATH`', () =>
-		new Promise(resolve => {
-			const stream = shell(
-				[`echo $PATH | grep -q "${join(process.cwd(), './node_modules/.bin')}"`],
-				{ shell: 'bash' }
-			)
+        stream.write(fakeFile)
+      }),
+    )
 
-			expectToFlow(stream, resolve)
+    describe(
+      '.task(commands, options)',
+      () => {
+        it(
+          'returns a function which returns a promise',
+          () => new Promise(resolve => {
+            const task = shell.task(['echo hello world'])
+            const promise = task()
 
-			stream.write(fakeFile)
-		}))
+            _expect(promise).to.be.instanceOf(Promise)
 
-	describe('.task(commands, options)', () => {
-		it('returns a function which returns a promise', () =>
-			new Promise(resolve => {
-				const task = shell.task(['echo hello world'])
-				const promise = task()
+            void promise.then(resolve)
+          }),
+        )
+      },
+    )
 
-				_expect(promise).to.be.instanceOf(Promise)
+    describe(
+      'options',
+      () => {
+        describe(
+          'cwd',
+          () => {
+            it(
+              'sets the current working directory when `cwd` is a string',
+              () => new Promise(resolve => {
+                const stream = shell(
+                  [
+                    `test $PWD = ${join(
+                      __dirname,
+                      '../..',
+                    )}`,
+                  ],
+                  {
+                    cwd: '..',
+                  },
+                )
 
-				void promise.then(resolve)
-			}))
-	})
+                expectToFlow(
+                  stream,
+                  resolve,
+                )
 
-	describe('options', () => {
-		describe('cwd', () => {
-			it('sets the current working directory when `cwd` is a string', () =>
-				new Promise(resolve => {
-					const stream = shell([`test $PWD = ${join(__dirname, '../..')}`], {
-						cwd: '..'
-					})
+                stream.write(fakeFile)
+              }),
+            )
 
-					expectToFlow(stream, resolve)
+            it(
+              'uses the process current working directory when `cwd` is not passed',
+              () => new Promise(resolve => {
+                const stream = shell([
+                  `test $PWD = ${join(
+                    __dirname,
+                    '..',
+                  )}`,
+                ])
 
-					stream.write(fakeFile)
-				}))
+                expectToFlow(
+                  stream,
+                  resolve,
+                )
 
-			it('uses the process current working directory when `cwd` is not passed', () =>
-				new Promise(resolve => {
-					const stream = shell([`test $PWD = ${join(__dirname, '..')}`])
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
 
-					expectToFlow(stream, resolve)
+        describe(
+          'shell',
+          () => {
+            it(
+              'changes the shell',
+              () => new Promise(resolve => {
+                const stream = shell(
+                  ['[[ $0 = bash ]]'],
+                  { shell: 'bash' },
+                )
 
-					stream.write(fakeFile)
-				}))
-		})
+                expectToFlow(
+                  stream,
+                  resolve,
+                )
 
-		describe('shell', () => {
-			it('changes the shell', () =>
-				new Promise(resolve => {
-					const stream = shell(['[[ $0 = bash ]]'], { shell: 'bash' })
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
 
-					expectToFlow(stream, resolve)
+        describe(
+          'quiet',
+          () => {
+            it(
+              'won\'t output anything when `quiet` == true',
+              () => new Promise(resolve => {
+                const stream = shell(
+                  ['echo cannot see me!'],
+                  { quiet: true },
+                )
 
-					stream.write(fakeFile)
-				}))
-		})
+                expectToFlow(
+                  stream,
+                  resolve,
+                )
 
-		describe('quiet', () => {
-			it("won't output anything when `quiet` == true", () =>
-				new Promise(resolve => {
-					const stream = shell(['echo cannot see me!'], { quiet: true })
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
 
-					expectToFlow(stream, resolve)
+        describe(
+          'verbose',
+          () => {
+            it(
+              'prints the command',
+              () => new Promise(resolve => {
+                const stream = shell(
+                  ['echo you can see me twice'],
+                  {
+                    verbose: true,
+                  },
+                )
 
-					stream.write(fakeFile)
-				}))
-		})
+                expectToFlow(
+                  stream,
+                  resolve,
+                )
 
-		describe('verbose', () => {
-			it('prints the command', () =>
-				new Promise(resolve => {
-					const stream = shell(['echo you can see me twice'], {
-						verbose: true
-					})
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
 
-					expectToFlow(stream, resolve)
+        describe(
+          'ignoreErrors',
+          () => {
+            it(
+              'emits error by default',
+              () => new Promise<void>(resolve => {
+                const stream = shell(['false'])
 
-					stream.write(fakeFile)
-				}))
-		})
+                stream.on(
+                  'error',
+                  error => {
+                    _expect(error).not.to.be.undefined()
+                    resolve()
+                  },
+                )
 
-		describe('ignoreErrors', () => {
-			it('emits error by default', () =>
-				new Promise<void>(resolve => {
-					const stream = shell(['false'])
+                stream.write(fakeFile)
+              }),
+            )
 
-					stream.on('error', error => {
-						_expect(error).not.to.be.undefined()
-						resolve()
-					})
+            it(
+              'won\'t emit error when `ignoreErrors` == true',
+              () => new Promise<void>((resolve, reject) => {
+                const stream = shell(
+                  ['false'],
+                  { ignoreErrors: true },
+                )
 
-					stream.write(fakeFile)
-				}))
+                stream.on(
+                  'error',
+                  reject,
+                )
 
-			it("won't emit error when `ignoreErrors` == true", () =>
-				new Promise<void>((resolve, reject) => {
-					const stream = shell(['false'], { ignoreErrors: true })
+                stream.on(
+                  'data',
+                  data => {
+                    _expect(data).to.equal(fakeFile)
+                    resolve()
+                  },
+                )
 
-					stream.on('error', reject)
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
 
-					stream.on('data', data => {
-						_expect(data).to.equal(fakeFile)
-						resolve()
-					})
+        describe(
+          'errorMessage',
+          () => {
+            it(
+              'allows for custom messages',
+              () => new Promise<void>(resolve => {
+                const errorMessage = 'foo'
+                const stream = shell(
+                  ['false'],
+                  { errorMessage },
+                )
 
-					stream.write(fakeFile)
-				}))
-		})
+                stream.on(
+                  'error',
+                  error => {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    _expect(error.message).to.equal(errorMessage)
+                    resolve()
+                  },
+                )
 
-		describe('errorMessage', () => {
-			it('allows for custom messages', () =>
-				new Promise<void>(resolve => {
-					const errorMessage = 'foo'
-					const stream = shell(['false'], { errorMessage })
+                stream.write(fakeFile)
+              }),
+            )
 
-					stream.on('error', error => {
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-						_expect(error.message).to.equal(errorMessage)
-						resolve()
-					})
+            it(
+              'includes the error object in the error context',
+              () => new Promise<void>(resolve => {
+                const errorMessage = 'Foo <%= error.code %>'
+                const expectedMessage = 'Foo 2'
+                const stream = shell(
+                  ['exit 2'],
+                  { errorMessage },
+                )
 
-					stream.write(fakeFile)
-				}))
+                stream.on(
+                  'error',
+                  error => {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    _expect(error.message).to.equal(expectedMessage)
+                    resolve()
+                  },
+                )
 
-			it('includes the error object in the error context', () =>
-				new Promise<void>(resolve => {
-					const errorMessage = 'Foo <%= error.code %>'
-					const expectedMessage = 'Foo 2'
-					const stream = shell(['exit 2'], { errorMessage })
-
-					stream.on('error', error => {
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-						_expect(error.message).to.equal(expectedMessage)
-						resolve()
-					})
-
-					stream.write(fakeFile)
-				}))
-		})
-	})
-})
+                stream.write(fakeFile)
+              }),
+            )
+          },
+        )
+      },
+    )
+  },
+)

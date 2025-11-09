@@ -1,6 +1,5 @@
-import stylisticJs from '@stylistic/eslint-plugin-js';
 import stylistic from '@stylistic/eslint-plugin';
-import prettierConfig from 'eslint-config-prettier';
+import stylisticJs from '@stylistic/eslint-plugin-js';
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -8,14 +7,15 @@ import tseslint from "typescript-eslint";
 export default defineConfig([globalIgnores(["**/.config/"]),
 stylistic.configs.all,
 {
-	files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { '@stylistic/js': stylisticJs, '@stylistic': stylistic }, extends: ["js/recommended"], languageOptions: {
+	files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { '@stylistic/js': stylisticJs, '@stylistic': stylistic }, languageOptions: {
 		sourceType: "module", ecmaVersion: 'latest',
 		parserOptions: { projectService: true, ecmaVersion: 'latest', tsconfigRootDir: import.meta.dirname, projectFolderIgnoreList: ["**/node_modules/**"], allowDefaultProject: ['eslint.config.mts', '*.js'], ecmaFeatures: { impliedStrict: true } }, globals: globals.node
 	},
-	rules: { '@stylistic/semi': 'error', '@stylistic/indent': ['error', 1], 'no-unused-vars': 'warn', 'arrow-parens': ['error', 'as-needed'], 'no-var': 'error', 'prefer-const': 'warn' },
+	rules: { '@stylistic/semi': 'error', '@stylistic/indent': ['error', 1], 'no-unused-vars': 'warn', 'arrow-parens': ['error', 'as-needed'], 'no-var': 'error', 'prefer-const': 'warn', 'quotes': ['error', 'single'] },
 },
+
 tseslint.configs.stylistic,
-	prettierConfig,
+stylistic.configs.recommended,
 tseslint.configs.recommended,
 tseslint.configs.strictTypeChecked,
 tseslint.configs.stylisticTypeChecked,
