@@ -72,7 +72,7 @@ describe('gulp-shell(commands, options)', () => {
 
 				_expect(promise).to.be.instanceOf(Promise)
 
-				promise.then(resolve)
+				void promise.then(resolve)
 			}))
 	})
 
@@ -169,6 +169,7 @@ describe('gulp-shell(commands, options)', () => {
 					const stream = shell(['false'], { errorMessage })
 
 					stream.on('error', error => {
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 						_expect(error.message).to.equal(errorMessage)
 						resolve()
 					})
@@ -183,6 +184,7 @@ describe('gulp-shell(commands, options)', () => {
 					const stream = shell(['exit 2'], { errorMessage })
 
 					stream.on('error', error => {
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 						_expect(error.message).to.equal(expectedMessage)
 						resolve()
 					})

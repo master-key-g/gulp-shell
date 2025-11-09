@@ -5,6 +5,7 @@ import * as path from 'path';
 import PluginError from 'plugin-error';
 import { obj as throughObj } from 'through2';
 import Vinyl from 'vinyl';
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
 const template = require('lodash.template-async');
 
 
@@ -42,6 +43,7 @@ const normalizeOptions = (options: Options = {}): Required<Options> => {
 	const pathToBin = path.join(process.cwd(), 'node_modules', '.bin')
 	/* istanbul ignore next */
 	const pathName = process.platform === 'win32' ? 'Path' : 'PATH'
+	// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 	const newPath = pathToBin + path.delimiter + process.env[pathName]
 	const env = {
 		...process.env,
@@ -69,14 +71,18 @@ const runCommand = (
 	file: Vinyl | null
 ): Promise<void> => {
 	const context = { file, ...options.templateData }
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 	command = template(command)(context)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     const cwd = template(options.cwd)(context);
 	if (options.verbose) {
+		// eslint-disable-next-line @typescript-eslint/restrict-plus-operands
 		fancyLog(`${PLUGIN_NAME}:`, chalk.cyan(cwd + "$ " + command))
 	}
 
 	const child = spawn(command, {
 		env: options.env,
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		cwd: cwd,
 		shell: options.shell,
 		stdio: options.quiet ? 'ignore' : 'inherit'
@@ -85,7 +91,7 @@ const runCommand = (
 	return new Promise((resolve, reject) => {
 		child.on('exit', code => {
 			if (code === 0 || options.ignoreErrors) {
-				return resolve()
+				resolve(); return;
 			}
 
 			const context = {
@@ -95,8 +101,10 @@ const runCommand = (
 				...options.templateData
 			}
 
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 			const message = template(options.errorMessage)(context)
 
+			// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
 			reject(new PluginError(PLUGIN_NAME, message))
 		})
 	})
@@ -120,11 +128,12 @@ const shell = (
 	const normalizedOptions = normalizeOptions(options)
 
 	const stream = throughObj(function (file, _encoding, done) {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		runCommands(normalizedCommands, normalizedOptions, file)
 			.then(() => {
 				this.push(file)
 			})
-			.catch(error => {
+			.catch((error: unknown) => {
 				this.emit('error', error)
 			})
 			.finally(done)
