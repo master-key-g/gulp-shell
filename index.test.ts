@@ -1,4 +1,5 @@
 import { expect as _expect } from '@hapi/code'
+import { describe, it } from 'mocha'
 import { join } from 'path'
 import Vinyl from 'vinyl'
 
