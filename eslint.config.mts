@@ -1,11 +1,14 @@
 import stylistic from '@stylistic/eslint-plugin';
 import stylisticJs from '@stylistic/eslint-plugin-js';
+import stylisticTs from '@stylistic/eslint-plugin-ts';
 import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([globalIgnores(["**/.config/"]),
 stylistic.configs.all,
+stylisticJs.configs.all,
+stylisticTs.configs.all,
 {
 	files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { '@stylistic/js': stylisticJs, '@stylistic': stylistic }, languageOptions: {
 		sourceType: "module", ecmaVersion: 'latest',
